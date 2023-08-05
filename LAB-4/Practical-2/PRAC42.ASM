@@ -1,0 +1,37 @@
+DATA SEGMENT
+    ARRAY DW 05H,05H,15H,25H,35H,45H
+    MIN DW ?
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+    MOV AX,DATA
+    MOV DS,AX
+
+    LEA SI,ARRAY
+    MOV CX,[SI]
+    ADD SI,2
+    MOV AX,[SI]
+
+    MYLOOP :
+        CMP [SI],AX
+        JC MINIMUM
+        JNC INCREMENT
+    
+    MINIMUM :
+        MOV AX,[SI]
+        JMP INCREMENT
+    
+    INCREMENT :
+        ADD SI,2
+        DEC CX
+        JZ ENDPROG
+        JMP MYLOOP
+    
+    ENDPROG :
+        MOV WORD PTR [MIN],AX
+        INT 03
+    
+
+
+CODE ENDS
+END

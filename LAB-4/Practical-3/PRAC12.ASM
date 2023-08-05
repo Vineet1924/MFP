@@ -1,0 +1,26 @@
+DATA SEGMENT
+    ARRAY DB 10 DUP('$')
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+    MOV AX,DATA
+    MOV DS,AX
+    
+    MOV SI,OFFSET ARRAY
+    LABEL1:
+        MOV AH,1
+        INT 21H
+        CMP AL,13
+        JE ENDPROG
+        MOV [SI],AL
+        INC SI
+        JMP LABEL1
+    ENDPROG:
+        MOV DX,OFFSET ARRAY
+        MOV AH,9
+        INT 21H
+    MOV AH,4CH
+    INT 21H
+CODE ENDS
+END
+
