@@ -1,0 +1,43 @@
+DATA SEGMENT
+    N1 DQ 1122334455H
+    N2 DQ 1122334455H
+    SUM DQ ?
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+    MOV AX,DATA
+    MOV DS,AX
+
+    LEA SI,WORD PTR N1
+    LEA DI,WORD PTR N2
+
+    MOV AX,[SI]
+    ADD AX,[DI]
+    MOV BX,AX
+
+    ADD SI,2
+    ADD DI,2
+
+    MOV AX,[SI]
+    ADC AX,[DI]
+    MOV CX,AX
+
+    ADD SI,2
+    ADD DI,2
+
+    MOV AH,[SI]
+    ADC AH,[DI]
+    MOV DH,AH
+
+    LEA SI,WORD PTR SUM
+    
+    MOV [SI],BX
+    ADD SI,2
+    MOV [SI],CX
+    ADD SI,2
+    MOV [SI],DH
+
+    INT 03
+CODE ENDS
+END
+

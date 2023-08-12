@@ -1,0 +1,31 @@
+DATA SEGMENT
+    ARRAY DW 05H,05H,15H,25H,35H,45H
+    REVERSED DW ?
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+    MOV AX,DATA
+    MOV DS,AX
+
+    LEA SI,ARRAY
+    LEA DI,REVERSED
+
+    MOV AX,[SI]
+    MOV CX,[SI]
+    MOV DX,2
+    MUL DX
+    MOV SI,AX
+
+    MYLOOP :
+        MOV DX,[SI]
+        SUB SI,2
+        MOV [DI],DX
+        ADD DI,2
+        DEC CX
+        JZ ENDPROG
+        JMP MYLOOP
+
+    ENDPROG :
+        INT 03
+CODE ENDS
+END

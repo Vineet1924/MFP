@@ -1,0 +1,32 @@
+DATA SEGMENT 
+    STRING DB "HELLOWORLD$"
+    LEN DB ($ - STRING)
+    CHAR DB "L"
+    ANS DB 1 ?
+    POSITION DW ?
+DATA ENDS
+CODE SEGMENT
+    ASSUME CS:CODE,DS:DATA
+    MOV AX,DATA
+    MOV DS,AX
+
+    MOV CH,0
+    MOV CL,LEN
+    LEA DI,STRING
+    MOV AL,CHAR
+        
+    CLD
+    REPNE SCASB
+
+    JNE NOT_FOUND
+    MOV ANS,1
+    MOV POSITION,DI
+    JMP EXIT
+        
+    NOT_FOUND:
+        MOV ANS,0
+        MOV POSITION,0
+    EXIT:
+        INT 03
+CODE ENDS
+END
